@@ -15,6 +15,10 @@ $docker run -d --name jaeger \
 You can then navigate to http://localhost:16686 to access the Jaeger UI.
 
 
+### Result
+[img]
+![alt text](https://raw.githubusercontent.com/up1/demo-go-opentelemetry/master/sample.png "Result")
+
 
 Reference 
 https://github.com/open-telemetry/opentelemetry-go/blob/master/sdk/trace/trace_test.go
