@@ -1,3 +1,4 @@
+### Start Jaeger
 ```
 $docker run -d --name jaeger \
   -e COLLECTOR_ZIPKIN_HTTP_PORT=9411 \
@@ -13,6 +14,11 @@ $docker run -d --name jaeger \
 ```
 
 You can then navigate to http://localhost:16686 to access the Jaeger UI.
+
+### Run
+```
+$go run hello.go
+```
 
 
 ### Result
