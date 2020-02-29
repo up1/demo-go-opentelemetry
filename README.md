@@ -22,7 +22,6 @@ $go run hello.go
 
 
 ### Result
-[img]
 ![alt text](https://raw.githubusercontent.com/up1/demo-go-opentelemetry/master/sample.png "Result")
 
 
