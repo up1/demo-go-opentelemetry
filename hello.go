@@ -45,19 +45,19 @@ func initTracer(name string) func() {
 }
 
 func main() {
-	fn := initTracer("trace-demo-01")
+	fn := initTracer("trace-producer")
 	defer fn()
 
 	ctx := context.Background()
 
-	tr := global.TraceProvider().Tracer("component-main")
+	tr := global.TraceProvider().Tracer("producer-main")
 	ctx, span := tr.Start(ctx, "foo")
 	bar(ctx)
 	span.End()
 }
 
 func bar(ctx context.Context) {
-	tr := global.TraceProvider().Tracer("component-bar")
+	tr := global.TraceProvider().Tracer("producer-bar")
 	_, span := tr.Start(ctx, "bar")
 	defer span.End()
 
@@ -65,23 +65,22 @@ func bar(ctx context.Context) {
 	fmt.Printf("%016x\n", span.SpanContext().TraceID)
 	fmt.Printf("%016x", span.SpanContext().SpanID)
 	service2(fmt.Sprintf("%016x", span.SpanContext().TraceID), fmt.Sprintf("%016x", span.SpanContext().SpanID))
-
 }
 
 func service2(traceID string, spanID string) {
-	fn := initTracer("trace-demo-02")
+	fn := initTracer("trace-consumer")
 	defer fn()
 
 	tid, _ := core.TraceIDFromHex(traceID)
 	sid, _ := core.SpanIDFromHex(spanID)
 
 	ctx := context.Background()
-	tr := global.TraceProvider().Tracer("service2-step01")
+	tr := global.TraceProvider().Tracer("consumer-step01")
 	sc := core.SpanContext{
 		TraceID:    tid,
 		SpanID:     sid,
 		TraceFlags: 0x0,
 	}
-	_, span := tr.Start(trace.ContextWithRemoteSpanContext(ctx, sc), "service2-span1")
+	_, span := tr.Start(trace.ContextWithRemoteSpanContext(ctx, sc), "consumer-span1")
 	span.End()
 }
